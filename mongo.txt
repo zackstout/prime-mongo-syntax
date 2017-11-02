@@ -1,0 +1,30 @@
+
+//task ONE:
+db.createCollection('orders')
+
+//task TWO:
+var orders = db.orders
+
+orders.insert({orderDate: new ISODate('2017-02-03'), orderTotal: 100, lineItems: [{unitPrice: 12, quantity: 2, productName: 'toothbrush'}, {unitPrice: 13, quantity: 4, productName: "toothpaste"}]})
+
+orders.insert({orderDate: new ISODate('2017-04-04'), orderTotal: 10100, lineItems: [{unitPrice: 100, quantity: 3, productName: 'shoes'}, {unitPrice: 11, quantity: 33, productName: 'socks'}]})
+
+orders.insert({orderDate: new ISODate('2017-01-02'), orderTotal: 1111, lineItems: [{unitPrice: 11, quantity: 33, productName: 'best books'}]})
+
+//task THREE:
+orders.find().pretty()
+
+//task FOUR:
+orders.find({orderDate: {$gt: ISODate("2017-01-31")}}).pretty()
+
+//task FIVE:
+orders.update({orderDate: "2017-02-03"}, {$set: {orderTotal: 63}})
+
+//task SIX:
+orders.update({"orderDate": ISODate("2017-04-04")}, {$push: {lineItems: {unitPrice: 1, quantity: 2, productName: "camisol"}}})
+
+//task SEVEN:
+orders.update({orderDate: ISODate("2017-01-02")}, {$set: {"lineItems.0": {unitPrice: 220, quantity: 2, productName: "transistor radio"}}})
+
+//task EIGHT:
+orders.find({lineItems: {$elemMatch: {quantity: {$gt: 2, $lt: 10}}}}).pretty()
